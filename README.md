@@ -2,7 +2,7 @@
 
 <!-- Typing banner -->
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1100&color=F78C40&center=true&vCenter=true&width=600&lines=Welcome+to+my+Java+Repository;Learning+OOP+and+Data+Structures;Building+Projects+All+Year+Long;Welcome Here Ni**.a%E2%9C%85" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1100&color=F78C40&center=true&vCenter=true&width=600&lines=Welcome+to+my+Java+Repository;Learning+OOP+and+Data+Structures;Building+Projects+All+Year+Long;Welcome Here Ni**.+a%E2%9C%85" alt="Typing SVG" />
 </p>
 
 <p align="center">
