@@ -50,7 +50,7 @@ public class UniversityManagementSystem {
         }
     }
 
-    static abstract class RegularFaculty extends Faculty {
+    static class RegularFaculty extends Faculty {
 
         private double clothingAllowance;
         private double sportsAllowance;
