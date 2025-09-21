@@ -1,10 +1,16 @@
 import models.Book;
-
+import models.Member;
+import models.Student;
+import models.Faculty;
+import java.io.IOException;
 import javax.swing.*;
 import java.util.ArrayList;
 
 public class Main {
-
+    public ArrayList<Book> books = new ArrayList<>();
+    private ArrayList <Member> members = new ArrayList<>();
+    private ArrayList <Student> students = new ArrayList<>();
+    private ArrayList <Faculty> faculties = new ArrayList<>();
     public static void main(String[] args) {
         Main app = new Main();
         app.MainMenu();
@@ -17,7 +23,7 @@ public class Main {
                     BookManagementMenu();
                     break;
                 case 2:
-                    //MemberManagementMenu();
+                    MemberManagementMenu();
                     break;
                 case 3:
                     //BorrowingSystemMenu();
@@ -31,9 +37,13 @@ public class Main {
             }
         }
 }
-    public ArrayList<Book> books = new ArrayList<>();
-    public void BookManagementMenu(){
-        int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Add Book\n2. Remove Book\n3. Update Book\n4. View All Books\n5. Back to Main Menu"));
+
+    public void BookManagementMenu()  {
+
+        int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Add Book\n2. Remove Book\n3. Update Book(Not Available Yet)\n4. View All Books\n5. Back to Main Menu"));
+        //NEED RERTRICTIONS FOR THIS INPUT PART
+        //NEED RERTRICTIONS FOR THIS INPUT PART
+        //NEED RERTRICTIONS FOR THIS INPUT PART
         switch (options) {
             case 1:
                 String title = JOptionPane.showInputDialog("Enter book title:");
@@ -56,12 +66,12 @@ public class Main {
                 }
                 break;
             case 3:
+                //TO BE IMPLEMENTED
                 //updateBook();
                 break;
             case 4:
                 for (Book book : books) {
                     JOptionPane.showMessageDialog(null, book.displayInfo());
-                    
                 }
                 break;
             case 5:
@@ -75,6 +85,27 @@ public class Main {
         int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Add Member\n2. Remove Member\n3. Update Member\n4. View All Members\n5. Back to Main Menu"));
         switch (options) {
             case 1:
+                int memberType = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose member type:\n1. Student\n2. Faculty"));
+                if (memberType == 1) {
+                    String studName = JOptionPane.showInputDialog("Enter student name:");
+                    int studId = Integer.parseInt(JOptionPane.showInputDialog("Enter student ID:"));
+                    String studDept = JOptionPane.showInputDialog("Enter student department:");
+                    String studLevel = JOptionPane.showInputDialog("Enter student level:");
+                    String studMajor = JOptionPane.showInputDialog("Enter student major:");
+                    Student newStudent = new Student(studName, studId, studDept, studLevel, studMajor);
+                    newStudent.getStudentInfo();
+                }else if (memberType == 2) {
+                    String factName = JOptionPane.showInputDialog("Enter faculty name:");
+                    int factId = Integer.parseInt(JOptionPane.showInputDialog("Enter faculty ID:"));
+                    String factDept = JOptionPane.showInputDialog("Enter faculty department:");
+                    String position = JOptionPane.showInputDialog("Enter faculty position: ");
+                    Faculty newFaculty = new Faculty(factName, factId, factDept, position);
+                    newFaculty.getMemberInfo();
+                }else {
+                    JOptionPane.showMessageDialog(null, "Invalid member type.");
+                    MemberManagementMenu();
+                }
+
                 //addMember();
                 break;
             case 2:
