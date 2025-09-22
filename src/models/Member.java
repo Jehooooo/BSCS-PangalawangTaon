@@ -28,6 +28,7 @@ public class Member {
     public void setDepartment(String department) {
         this.department = department;
     }
+
     public String getMemberInfo() {
         return "Name: " + name + ", ID: " + numberID + ", Department: " + department;
     }

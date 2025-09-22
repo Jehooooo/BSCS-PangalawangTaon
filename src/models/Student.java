@@ -25,8 +25,9 @@ public class Student extends Member {
     public void setMajor(String major) {
         this.major = major;
     }
-    public String getStudentInfo() {
-        return "Name: " + getName() + ", ID: " + getNumberID() + ", Department: " + getDepartment() +
-               ", Year: " + year + ", Course: " + major;
+    @Override
+    public String getMemberInfo() {
+        return "\nName: " + getName() + "\nID: " + getNumberID() + "\nDepartment: " + getDepartment() +
+               "\nYear: " + getYear() + "\nCourse: " + getMajor();
     }
 }

@@ -71,7 +71,7 @@ public class Main {
                 break;
             case 4:
                 for (Book book : books) {
-                    JOptionPane.showMessageDialog(null, book.displayInfo());
+                    System.out.print(books.toString());
                 }
                 break;
             case 5:
@@ -93,7 +93,9 @@ public class Main {
                     String studLevel = JOptionPane.showInputDialog("Enter student level:");
                     String studMajor = JOptionPane.showInputDialog("Enter student major:");
                     Student newStudent = new Student(studName, studId, studDept, studLevel, studMajor);
-                    newStudent.getStudentInfo();
+                    newStudent.getMemberInfo();
+                    System.out.println("Student Added Successfully"+newStudent.getMemberInfo());
+                    students.add(newStudent);
                 }else if (memberType == 2) {
                     String factName = JOptionPane.showInputDialog("Enter faculty name:");
                     int factId = Integer.parseInt(JOptionPane.showInputDialog("Enter faculty ID:"));
@@ -101,6 +103,8 @@ public class Main {
                     String position = JOptionPane.showInputDialog("Enter faculty position: ");
                     Faculty newFaculty = new Faculty(factName, factId, factDept, position);
                     newFaculty.getMemberInfo();
+                    System.out.println("Faculty Added Successfully"+newFaculty.getMemberInfo());
+                    faculties.add(newFaculty);
                 }else {
                     JOptionPane.showMessageDialog(null, "Invalid member type.");
                     MemberManagementMenu();
@@ -109,9 +113,15 @@ public class Main {
                 //addMember();
                 break;
             case 2:
-                //removeMember();
+                boolean isStudent = JOptionPane.showConfirmDialog(null, "Is the member a student?", "Member Type", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+                String memberIdToRemove = JOptionPane.showInputDialog("Enter member ID to remove: ");
+                boolean memberRemoved;
+                if (isStudent) {
+                    memberRemoved = students.removeIf(student -> Integer.toString(student.getNumberID()).equals(memberIdToRemove));
+                }
                 break;
             case 3:
+
                 //updateMember();
                 break;
             case 4:

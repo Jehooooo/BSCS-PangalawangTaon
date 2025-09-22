@@ -20,7 +20,7 @@ public class Faculty extends Member{
 
     @Override
     public String getMemberInfo() {
-        return "Name: " + getName() + ", ID: " + getNumberID() + ", Department: " + getDepartment() +
-               ", Position: " + position;
+        return "\nName: " + getName() + "\nID: " + getNumberID() + "\nDepartment: " + getDepartment() +
+               "\nPosition: " + position;
     }
 }
