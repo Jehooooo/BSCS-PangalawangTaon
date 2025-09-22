@@ -46,6 +46,7 @@ public class Main {
         //NEED RERTRICTIONS FOR THIS INPUT PART
         switch (options) {
             case 1:
+
                 String title = JOptionPane.showInputDialog("Enter book title:");
                 String author = JOptionPane.showInputDialog("Enter book author:");
                 String category = JOptionPane.showInputDialog("Enter book category:");
@@ -66,8 +67,34 @@ public class Main {
                 }
                 break;
             case 3:
-                //TO BE IMPLEMENTED
-                //updateBook();
+                int bookIdToUpdate = Integer.parseInt(JOptionPane.showInputDialog("Enter book number to update: "));
+                if ( bookIdToUpdate != 0) {
+                    for (Book book : books) {
+                        if (Integer.toString(book.getBookNumber()).equals(bookIdToUpdate)) {
+                            String newTitle = JOptionPane.showInputDialog("Enter new title (leave blank to keep current):");
+                            if (!newTitle.isEmpty()) {
+                                book.setTitle(newTitle);
+                            }
+                            String newAuthor = JOptionPane.showInputDialog("Enter new author (leave blank to keep current):");
+                            if (!newAuthor.isEmpty()) {
+                                book.setAuthor(newAuthor);
+                            }
+                            String newCategory = JOptionPane.showInputDialog("Enter new category (leave blank to keep current):");
+                            if (!newCategory.isEmpty()) {
+                                book.setCategory(newCategory);
+                            }
+                            String newIsbn = JOptionPane.showInputDialog("Enter new ISBN (leave blank to keep current):");
+                            if (!newIsbn.isEmpty()) {
+                                book.setIsbn(newIsbn);
+                            }
+                            JOptionPane.showMessageDialog(null, "Book updated successfully!");
+                            return;
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null, "Book not found.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid book number.");
+                }
                 break;
             case 4:
                 for (Book book : books) {

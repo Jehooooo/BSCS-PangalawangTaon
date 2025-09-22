@@ -15,11 +15,14 @@ public class Book {
         this.bookNumber = counter++;
         this.title = title;
         this.author = author;
-        this.category = "General"; // Default category
+        this.category = category; // Default category
         this.isbn = isbn;
         this.isAvailable = true; // New books are available by default
     }
     public int getBookNumber() {
+        return bookNumber;
+    }
+    public int setBookNumber(int bookNumber) {
         return bookNumber;
     }
 
