@@ -8,9 +8,10 @@ import java.util.ArrayList;
 
 public class Main {
     public ArrayList<Book> books = new ArrayList<>();
-    private ArrayList <Member> members = new ArrayList<>();
-    private ArrayList <Student> students = new ArrayList<>();
-    private ArrayList <Faculty> faculties = new ArrayList<>();
+    protected ArrayList<Member> members = new ArrayList<>();// Not declared as final so the list contents can be updated (add, remove or update members).
+    private static ArrayList <Student> students = new ArrayList<>();// Not declared as final so the list contents can be updated (add, remove  or update  members). but it can be a protected instead of private
+    private static ArrayList <Faculty> faculties = new ArrayList<>();// Not declared as final so the list contents can be updated (add, remove or update  members).
+
     public static void main(String[] args) {
         Main app = new Main();
         app.MainMenu();
@@ -40,7 +41,7 @@ public class Main {
 
     public void BookManagementMenu()  {
 
-        int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Add Book\n2. Remove Book\n3. Update Book(Not Available Yet)\n4. View All Books\n5. Back to Main Menu"));
+        int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Add Book\n2. Remove Book\n3. Update Book\n4. View All Books\n5. Back to Main Menu"));
         //NEED RERTRICTIONS FOR THIS INPUT PART
         //NEED RERTRICTIONS FOR THIS INPUT PART
         //NEED RERTRICTIONS FOR THIS INPUT PART
@@ -51,6 +52,7 @@ public class Main {
                 String author = JOptionPane.showInputDialog("Enter book author:");
                 String category = JOptionPane.showInputDialog("Enter book category:");
                 String isbn = JOptionPane.showInputDialog("Enter book ISBN:");
+
                 Book newBook = new Book(title, author, category, isbn);
                 //addBook(newBook);
                 JOptionPane.showMessageDialog(null,"Book added successfully!"+newBook.displayInfo());
@@ -70,7 +72,7 @@ public class Main {
                 int bookIdToUpdate = Integer.parseInt(JOptionPane.showInputDialog("Enter book number to update: "));
                 if ( bookIdToUpdate != 0) {
                     for (Book book : books) {
-                        if (Integer.toString(book.getBookNumber()).equals(bookIdToUpdate)) {
+                        if ( book.getBookNumber() == bookIdToUpdate) {
                             String newTitle = JOptionPane.showInputDialog("Enter new title (leave blank to keep current):");
                             if (!newTitle.isEmpty()) {
                                 book.setTitle(newTitle);
@@ -123,6 +125,7 @@ public class Main {
                     newStudent.getMemberInfo();
                     System.out.println("Student Added Successfully"+newStudent.getMemberInfo());
                     students.add(newStudent);
+                    members.add(newStudent);
                 }else if (memberType == 2) {
                     String factName = JOptionPane.showInputDialog("Enter faculty name:");
                     int factId = Integer.parseInt(JOptionPane.showInputDialog("Enter faculty ID:"));
@@ -132,19 +135,39 @@ public class Main {
                     newFaculty.getMemberInfo();
                     System.out.println("Faculty Added Successfully"+newFaculty.getMemberInfo());
                     faculties.add(newFaculty);
+                    members.add(newFaculty);
                 }else {
                     JOptionPane.showMessageDialog(null, "Invalid member type.");
                     MemberManagementMenu();
                 }
 
+
                 //addMember();
                 break;
             case 2:
-                boolean isStudent = JOptionPane.showConfirmDialog(null, "Is the member a student?", "Member Type", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-                String memberIdToRemove = JOptionPane.showInputDialog("Enter member ID to remove: ");
-                boolean memberRemoved;
-                if (isStudent) {
-                    memberRemoved = students.removeIf(student -> Integer.toString(student.getNumberID()).equals(memberIdToRemove));
+
+                try {
+                    if (students.isEmpty() && faculties.isEmpty()) {
+                        throw new Exception("No members available to remove.");
+                    }
+
+                //select the type of member to remove
+                int memberTypeToRemove = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose member type to remove:\n1. Student\n2. Faculty"));
+                if (memberTypeToRemove == 1) {
+                    String studIdToRemove = JOptionPane.showInputDialog("Enter student ID to remove: ");
+                    boolean removedStudent = students.removeIf(Student -> Integer.toString(Student.getNumberID()).equals(studIdToRemove));
+                } else if (memberTypeToRemove == 2) {
+                    String factIdToRemove = JOptionPane.showInputDialog("Enter faculty ID to remove: ");
+                    boolean removedFaculty = faculties.removeIf(Faculty -> Integer.toString(Faculty.getNumberID()).equals(factIdToRemove));
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid member type.");
+                    MemberManagementMenu();
+
+                }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    MemberManagementMenu();
+                    return;
                 }
                 break;
             case 3:
@@ -152,7 +175,12 @@ public class Main {
                 //updateMember();
                 break;
             case 4:
-                //viewAllMembers();
+                for (Student student : students) {
+                    System.out.println(student.getMemberInfo());
+                }
+                for (Faculty faculty : faculties) {
+                    System.out.println(faculty.getMemberInfo());
+                }
                 break;
             case 5:
                 MainMenu();

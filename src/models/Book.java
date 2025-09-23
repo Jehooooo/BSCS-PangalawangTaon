@@ -22,10 +22,6 @@ public class Book {
     public int getBookNumber() {
         return bookNumber;
     }
-    public int setBookNumber(int bookNumber) {
-        return bookNumber;
-    }
-
 
     public String getTitle() {
         return title;
