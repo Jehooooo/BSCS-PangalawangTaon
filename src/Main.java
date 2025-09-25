@@ -6,6 +6,8 @@ import java.io.IOException;
 import javax.swing.*;
 import java.util.ArrayList;
 
+//FOR THE FINAL FINALIZATION USE OPTION DIALOG FOR THE INPUTS
+
 public class Main {
     public ArrayList<Book> books = new ArrayList<>();
     protected ArrayList<Member> members = new ArrayList<>();// Not declared as final so the list contents can be updated (add, remove or update members).
@@ -110,7 +112,7 @@ public class Main {
     }
 
 
-    public void MemberManagementMenu(){
+    public void MemberManagementMenu() {
         int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Add Member\n2. Remove Member\n3. Update Member\n4. View All Members\n5. Back to Main Menu"));
         switch (options) {
             case 1:
@@ -123,20 +125,20 @@ public class Main {
                     String studMajor = JOptionPane.showInputDialog("Enter student major:");
                     Student newStudent = new Student(studName, studId, studDept, studLevel, studMajor);
                     newStudent.getMemberInfo();
-                    System.out.println("Student Added Successfully"+newStudent.getMemberInfo());
+                    System.out.println("Student Added Successfully" + newStudent.getMemberInfo());
                     students.add(newStudent);
                     members.add(newStudent);
-                }else if (memberType == 2) {
+                } else if (memberType == 2) {
                     String factName = JOptionPane.showInputDialog("Enter faculty name:");
                     int factId = Integer.parseInt(JOptionPane.showInputDialog("Enter faculty ID:"));
                     String factDept = JOptionPane.showInputDialog("Enter faculty department:");
                     String position = JOptionPane.showInputDialog("Enter faculty position: ");
                     Faculty newFaculty = new Faculty(factName, factId, factDept, position);
                     newFaculty.getMemberInfo();
-                    System.out.println("Faculty Added Successfully"+newFaculty.getMemberInfo());
+                    System.out.println("Faculty Added Successfully" + newFaculty.getMemberInfo());
                     faculties.add(newFaculty);
                     members.add(newFaculty);
-                }else {
+                } else {
                     JOptionPane.showMessageDialog(null, "Invalid member type.");
                     MemberManagementMenu();
                 }
@@ -151,19 +153,19 @@ public class Main {
                         throw new Exception("No members available to remove.");
                     }
 
-                //select the type of member to remove
-                int memberTypeToRemove = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose member type to remove:\n1. Student\n2. Faculty"));
-                if (memberTypeToRemove == 1) {
-                    String studIdToRemove = JOptionPane.showInputDialog("Enter student ID to remove: ");
-                    boolean removedStudent = students.removeIf(Student -> Integer.toString(Student.getNumberID()).equals(studIdToRemove));
-                } else if (memberTypeToRemove == 2) {
-                    String factIdToRemove = JOptionPane.showInputDialog("Enter faculty ID to remove: ");
-                    boolean removedFaculty = faculties.removeIf(Faculty -> Integer.toString(Faculty.getNumberID()).equals(factIdToRemove));
-                } else {
-                    JOptionPane.showMessageDialog(null, "Invalid member type.");
-                    MemberManagementMenu();
+                    //select the type of member to remove
+                    int memberTypeToRemove = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose member type to remove:\n1. Student\n2. Faculty"));
+                    if (memberTypeToRemove == 1) {
+                        String studIdToRemove = JOptionPane.showInputDialog("Enter student ID to remove: ");
+                        boolean removedStudent = students.removeIf(Student -> Integer.toString(Student.getNumberID()).equals(studIdToRemove));
+                    } else if (memberTypeToRemove == 2) {
+                        String factIdToRemove = JOptionPane.showInputDialog("Enter faculty ID to remove: ");
+                        boolean removedFaculty = faculties.removeIf(Faculty -> Integer.toString(Faculty.getNumberID()).equals(factIdToRemove));
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid member type.");
+                        MemberManagementMenu();
 
-                }
+                    }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage());
                     MemberManagementMenu();
@@ -172,53 +174,109 @@ public class Main {
                 break;
             case 3:
 
-                //updateMember();
-                break;
-            case 4:
-                for (Student student : students) {
-                    System.out.println(student.getMemberInfo());
+                int selectMember = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose member type to update:\n1. Student\n2. Faculty"));
+                if (selectMember == 1) {
+                    int studIdToUpdate = Integer.parseInt(JOptionPane.showInputDialog("Enter student ID to update: "));
+                    if (studIdToUpdate != 0) {
+                        for (Student student : students) {
+                            if (student.getNumberID() == studIdToUpdate) {
+                                String newName = JOptionPane.showInputDialog("Enter new name (leave blank to keep current):");
+                                if (!newName.isEmpty()) {
+                                    student.setName(newName);
+                                }
+                                String newDept = JOptionPane.showInputDialog("Enter new department (leave blank to keep current):");
+                                if (!newDept.isEmpty()) {
+                                    student.setDepartment(newDept);
+                                }
+                                String newYear = JOptionPane.showInputDialog("Enter new year (leave blank to keep current):");
+                                if (!newYear.isEmpty()) {
+                                    student.setYear(newYear);
+                                }
+                                String newMajor = JOptionPane.showInputDialog("Enter new major (leave blank to keep current):");
+                                if (!newMajor.isEmpty()) {
+                                    student.setMajor(newMajor);
+                                }
+                                JOptionPane.showMessageDialog(null, "Student updated successfully!");
+                                return;
+                            }
+                        }
+                        JOptionPane.showMessageDialog(null, "Student not found.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid student ID.");
+                    }
+                } else if (selectMember == 2) {
+                    int factIdToUpdate = Integer.parseInt(JOptionPane.showInputDialog("Enter faculty ID to update: "));
+                    if (factIdToUpdate != 0) {
+                        for (Faculty faculty : faculties) {
+                            if (faculty.getNumberID() == factIdToUpdate) {
+                                String newName = JOptionPane.showInputDialog("Enter new name (leave blank to keep current):");
+                                if (!newName.isEmpty()) {
+                                    faculty.setName(newName);
+                                }
+                                String newDept = JOptionPane.showInputDialog("Enter new department (leave blank to keep current):");
+                                if (!newDept.isEmpty()) {
+                                    faculty.setDepartment(newDept);
+                                }
+                                String newPosition = JOptionPane.showInputDialog("Enter new position (leave blank to keep current):");
+                                if (!newPosition.isEmpty()) {
+                                    faculty.setPosition(newPosition);
+                                }
+
+                                JOptionPane.showMessageDialog(null, "Faculty updated successfully!");
+                                return;
+                            }
+                        }
+                    }
                 }
-                for (Faculty faculty : faculties) {
-                    System.out.println(faculty.getMemberInfo());
+
+                        //updateMember();
+                        break;
+                        case 4:
+                            for (Student student : students) {
+                                System.out.println(student.getMemberInfo());
+                            }
+                            for (Faculty faculty : faculties) {
+                                System.out.println(faculty.getMemberInfo());
+                            }
+                            break;
+                        case 5:
+                            MainMenu();
+                            break;
+                    }
                 }
-                break;
-            case 5:
-                MainMenu();
-                break;
-        }
+                public void BorrowingSystemMenu () {
+                int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Borrow Book\n2. Return Book\n3. View Borrowed Books\n4. Back to Main Menu"));
+                switch (options) {
+                    case 1:
+                        //borrowBook();
+                        break;
+                    case 2:
+                        //returnBook();
+                        break;
+                    case 3:
+                        //viewBorrowedBooks();
+                        break;
+                    case 4:
+                        MainMenu();
+                        break;
+                }
+            }
+            public void SearchMenu () {
+                int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Search Book by Title\n2. Search Book by Author\n3. Search Member by Name\n4. Back to Main Menu"));
+                switch (options) {
+                    case 1:
+                        //searchBook();
+                        break;
+                    case 2:
+                        //searchMemberByName();
+                        break;
+                    case 3:
+                        //searchBorrowerByName();
+                        break;
+                    case 4:
+                        MainMenu();
+                        break;
+                }
+            }
+
     }
-    public void BorrowingSystemMenu(){
-        int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Borrow Book\n2. Return Book\n3. View Borrowed Books\n4. Back to Main Menu"));
-        switch (options) {
-            case 1:
-                //borrowBook();
-                break;
-            case 2:
-                //returnBook();
-                break;
-            case 3:
-                //viewBorrowedBooks();
-                break;
-            case 4:
-                MainMenu();
-                break;
-        }
-    }
-    public void SearchMenu(){
-        int options = Integer.parseInt(JOptionPane.showInputDialog(null, "Choose an option:\n1. Search Book by Title\n2. Search Book by Author\n3. Search Member by Name\n4. Back to Main Menu"));
-        switch (options) {
-            case 1:
-                //searchBook();
-                break;
-            case 2:
-                //searchMemberByName();
-                break;
-            case 3:
-                //searchBorrowerByName();
-                break;
-            case 4:
-                MainMenu();
-                break;
-        }
-    }
-}
